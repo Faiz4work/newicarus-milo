@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<form action="{{ url_for('main.results') }}" method="GET">
+<div class="container ">
+    <!-- <h4 class="py-4 text-left">Suneese Vacancy Feed</h4> -->
+    <div class="jumbotron bg-white drop-shadow small">
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Quick search</h5>
+                <p>Search for new Icarus Feed. Currently <bold>{{ jobs }}</bold> Record</p>
+            </div>
+            <div class="col-md-3 py-4"><h6>Search For</h6></div>
+            <div class="col-md-9 py-4">
+                <input input type="text"  id="" name="query" placeholder="Software Sales" 
+                style="width: 250px; height:30px;">
+            </div>
+            <div class="col-md-3"><h6>Where</h6></div>
+            <div class="col-md-9">
+                <input type="text" placeholder="London" name="location" style="width: 250px; height:30px;">
+            </div>
+            <div class="col-md-3 py-4">
+                <input type="reset" class="btn btn-secondary" value="Clear Search">
+                <button class="btn btn-secondary" >Search</button>
+            </div>
+        </div>
+        
+    </div>
+</div>
+</form>
+
+{% endblock body %}

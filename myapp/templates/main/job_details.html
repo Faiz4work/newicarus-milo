@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="container ">
+<div class="row">
+    <!-- <h4 class="py-4 text-left">View Vacancy Details For SITA (SI35214C / 158705)</h4> -->
+  
+    <div class="boxlook1 drop-shadow">
+     <div class="row">
+        <div class="col-sm-12">
+            <h6>Vacancy title: <span style="font-size:20px; color:red;">{{job.job_title}}</span></h6>
+            <hr>
+        </div>
+        <div class="col-md-3">
+            <h6>Vacancy number</h6>
+            {{job.id}}
+            <hr>
+        </div>
+        <div class="col-md-3">
+            <h6>Date Added</h6>
+            {{job.date_posted.strftime('%d / %b / %Y')}}
+            <hr>
+        </div>
+        <div class="col-md-3">
+            <h6>Type</h6>
+            {{ job.job_type }}
+            <hr>
+        </div>
+        <div class="col-md-3">
+            <h6>Source</h6>
+             {{ job.source }}
+            <hr>
+        </div>
+       
+        <div class="col-md-6">
+            <h6>Salary</h6>
+            {{ job.salary }}
+            <hr>
+        </div>
+        
+        <div class="col-md-6">
+            <h6>Email</h6>
+            Not Available
+            <hr>
+        </div>
+        <div class="col-md-6">
+            <h6>Location Information:</h6><P>{{ job.job_location }}</p>
+            
+            
+            <hr>
+        </div>
+        <div class="col-md-6">
+            <h6>Contact URl For This Employer</h6>None</a>  
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="comment">URL :</label>
+                <a href="{{ job.job_url }}" target="_blank"
+                 class="text-info">{{ job.job_url }}</a>
+              </div>
+              <iframe src="{{ job.job_url }}" class="d-block mx-auto"
+              style="border:2px solid red"
+              height="500" width="1000" title="job page"></iframe>
+        </div>
+     </div>
+
+       
+</div>
+</div>
+
+{% endblock body %}

@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="container ">
+    <div class="jumbotron bg-white drop-shadow">
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Now {{length}} results available for "{{keywords}}"</h5>
+                <br>
+                <table class="table  table-hover table-sm">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Employer</th>
+                            <th>Job Location</th>
+                            <th>Job Type</th>
+                            <th>Source</th>
+                            <th>CSV</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for job in jobs %}
+                        <tr>
+                            <td style="width: 400px;"><a href="{{ url_for('main.job_details', id=job.id) }}"
+                                style="color: blue;">
+                                {{ job.job_title }}</a></td>
+                            <td>{{ job.date_posted.strftime('%d/%b/%Y') }}</td>
+                            <td>{{ job.company_name }}</td>
+                            <td>{{ job.job_location }}</td>
+                            <td>{{ job.job_type }}</td>
+                            <td>{{ job.source }}</td>
+                            <td><input type="checkbox" id="" name="" value=""></td>
+                        </tr>
+                        {% endfor %}
+                        <!-- <tr>
+                            <td>Client Partner</td>
+                            <td>NIL</td>
+                            <td>00/00/2021</td>
+                            <td>Name </td>
+                            <td>Pakistan</td>
+                            <td>Pakistan</td>
+                            <td>0</td>
+                            <td>----</td>
+                            <td><input type="checkbox" id="" name="" value=""></td>
+                        </tr>
+                        <tr>
+                            <td>Client Partner</td>
+                            <td>NIL</td>
+                            <td>00/00/2021</td>
+                            <td>Name </td>
+                            <td>Pakistan</td>
+                            <td>Pakistan</td>
+                            <td>0</td>
+                            <td>----</td>
+                            <td><input type="checkbox" id="" name="" value=""></td>
+                        </tr>
+                        <tr>
+                            <td>Client Partner</td>
+                            <td>NIL</td>
+                            <td>00/00/2021</td>
+                            <td>Name </td>
+                            <td>Pakistan</td>
+                            <td>Pakistan</td>
+                            <td>0</td>
+                            <td>----</td>
+                            <td><input type="checkbox" id="" name="" value=""></td>
+                        </tr>
+                        <tr>
+                            <td>Client Partner</td>
+                            <td>NIL</td>
+                            <td>00/00/2021</td>
+                            <td>Name </td>
+                            <td>Pakistan</td>
+                            <td>Pakistan</td>
+                            <td>0</td>
+                            <td>----</td>
+                            <td><input type="checkbox" id="" name="" value=""></td>
+                        </tr>
+                        <tr>
+                            <td>Client Partner</td>
+                            <td>NIL</td>
+                            <td>00/00/2021</td>
+                            <td>Name </td>
+                            <td>Pakistan</td>
+                            <td>Pakistan</td>
+                            <td>0</td>
+                            <td>----</td>
+                            <td><input type="checkbox" id="" name="" value=""></td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+           
+            
+        
+        
+        </form>
+        </div>
+
+    </div>
+  
+</div>
+
+{% endblock body %}

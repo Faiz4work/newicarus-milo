@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login Form</title>
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+        
+    </head>
+    <body>
+        
+        <section>
+            <div class="box">
+                <div class="form">
+                    <h2>LOGIN</h2>
+                    {% include "_flash_message.html" %}
+                    <form method="POST" action="{{ url_for('user.login') }}">
+                        <div class="inputBx">
+                            {{ form.email(placeholder="Email Address") }}
+                            {% if form.email.errors %}
+                                {% for error in form.email.errors %}
+                                    <span class="text-danger">{{ error}}</span>                                
+                                {% endfor %}
+                            {% endif %}
+                            <img src="{{ url_for('static', filename='img/user.png') }}">
+                        </div>
+                        <div class="inputBx">
+                            {{ form.password(placeholder="Password") }}
+                            {% if form.password.errors %}
+                                {% for error in form.password.errors %}
+                                    <span class="text-danger">{{ error}}</span>                                
+                                {% endfor %}
+                            {% endif %}
+                            <img src="{{ url_for('static', filename='img/lock.png') }}">
+                        </div>
+                        <label class="remeber"><input type="checkbox" name="remember"> Remember Me</label>
+                        <div class="inputBx">
+                            <input type="submit" value="Login">
+                        </div>
+                    </form>
+                    <!-- <p>Need An <a href="#"> Account</a></p> -->
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
