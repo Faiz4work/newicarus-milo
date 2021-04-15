@@ -44,10 +44,15 @@ if 'simply_uk.py' == spider_name:
         location = data['Company Location'][d]
         job_type = data['Job Type'][d]
         company_job_link = data['Job Link'][d]
+        source = 'simplyhired.co.uk'
+
+        has_old = Jobs.query.filter_by(job_title=title, source=source).first()
+        if has_old:
+            db.session.delete(has_old)
 
         job = Jobs(job_title=title, city=city, date_posted=datetime.now(), 
                    company_name=company_name, company_website=company_website,
-                   source='simplyhired.co.uk', sector_information='', job_type=job_type,
+                   source=source, sector_information='', job_type=job_type,
                    job_location=location, job_url=company_job_link)
         db.session.add(job)
     db.session.commit()
@@ -80,10 +85,15 @@ if 'simply_usa.py' == spider_name:
         location = data['Company Location'][d]
         job_type = data['Job Type'][d]
         company_job_link = data['Job Link'][d]
+        source = 'www.simplyhired.com'
+
+        has_old = Jobs.query.filter_by(job_title=title, source=source).first()
+        if has_old:
+            db.session.delete(has_old)
 
         job = Jobs(job_title=title, city=city, date_posted=datetime.now(), 
                    company_name=company_name, company_website=company_website,
-                   source='www.simplyhired.com', sector_information='', job_type=job_type,
+                   source=source, sector_information='', job_type=job_type,
                    job_location=location, job_url=company_job_link)
         db.session.add(job)
     db.session.commit()
@@ -117,11 +127,16 @@ if 'efinancial_uk.py' == spider_name:
         company_job_link = data['Job Link'][d]
         salary = data['Salary'][d]
         description = data['Description'][d]
+        source = 'efinancialcareers.co.uk'
+
+        has_old = Jobs.query.filter_by(job_title=title, source=source).first()
+        if has_old:
+            db.session.delete(has_old)
 
 
         job = Jobs(job_title=title, city=city, date_posted=datetime.now(), 
                    company_name=company_name, company_website=company_website,
-                   source='efinancialcareers.co.uk', sector_information='', job_type=job_type,
+                   source=source, sector_information='', job_type=job_type,
                    job_location=location, job_url=company_job_link,
                    description=description, salary=salary)
         db.session.add(job)
@@ -132,42 +147,42 @@ if 'efinancial_uk.py' == spider_name:
 
 
 # if 'indeed_uk.py' == spider_name:
-    if pythonanywhere:
-        spider_path = '/home/newicarus/mysite/myapp/myapp/scraper/scripts/indeed/indeed_uk.py'
-        results_path = '/home/newicarus/mysite/myapp/myapp/scraper/results/indeed/indeed_uk_results.csv'
-    else:
-        spider_path = 'myapp\\scraper\\scripts\\indeed\\indeed_uk.py'
-        results_path = 'myapp\\scraper\\results\\indeed\\indeed_uk_results.csv'
+    # if pythonanywhere:
+    #     spider_path = '/home/newicarus/mysite/myapp/myapp/scraper/scripts/indeed/indeed_uk.py'
+    #     results_path = '/home/newicarus/mysite/myapp/myapp/scraper/results/indeed/indeed_uk_results.csv'
+    # else:
+    #     spider_path = 'myapp\\scraper\\scripts\\indeed\\indeed_uk.py'
+    #     results_path = 'myapp\\scraper\\results\\indeed\\indeed_uk_results.csv'
 
     # runSpider(spider_path, results_path)
 
-    # pushing app context
-    mapp = create_app()
-    mapp.app_context().push()
-    # Adding data to database
-    data = pd.read_csv(results_path)
-    for d in data.index:
-        title = data['Title'][d]
-        company_name = data['Company Name'][d]
-        company_website = data['Company Job link'][d]
-        city = data['City'][d]
-        location = data['Company Location'][d]
-        job_type = data['Job Type'][d]
-        company_job_link = data['Job link'][d]
-        salary = data['Salary'][d]
-        description = ''
+    # # pushing app context
+    # mapp = create_app()
+    # mapp.app_context().push()
+    # # Adding data to database
+    # data = pd.read_csv(results_path)
+    # for d in data.index:
+    #     title = data['Title'][d]
+    #     company_name = data['Company Name'][d]
+    #     company_website = data['Company Job link'][d]
+    #     city = data['City'][d]
+    #     location = data['Company Location'][d]
+    #     job_type = data['Job Type'][d]
+    #     company_job_link = data['Job link'][d]
+    #     salary = data['Salary'][d]
+    #     description = ''
 
 
-        job = Jobs(job_title=title, city=city, date_posted=datetime.now(), 
-                   company_name=company_name, company_website=company_website,
-                   source='uk.indeed.com', sector_information='', job_type=job_type,
-                   job_location=location, job_url=company_job_link,
-                   description=description, salary=salary)
-        db.session.add(job)
-    db.session.commit()
+    #     job = Jobs(job_title=title, city=city, date_posted=datetime.now(), 
+    #                company_name=company_name, company_website=company_website,
+    #                source='uk.indeed.com', sector_information='', job_type=job_type,
+    #                job_location=location, job_url=company_job_link,
+    #                description=description, salary=salary)
+    #     db.session.add(job)
+    # db.session.commit()
 
-    # removing previous file
-    os.remove(results_path)
+    # # removing previous file
+    # os.remove(results_path)
 
 
 if 'reed.py' == spider_name:
@@ -194,11 +209,15 @@ if 'reed.py' == spider_name:
         company_job_link = data['Job Link'][d]
         salary = data['Salary'][d]
         description = ''
+        source='reed.co.uk'
 
-
+        has_old = Jobs.query.filter_by(job_title=title, source=source).first()
+        if has_old:
+            db.session.delete(has_old)
+            
         job = Jobs(job_title=title, city=city, date_posted=datetime.now(), 
                    company_name=company_name, company_website='',
-                   source='reed.co.uk', sector_information='', job_type=job_type,
+                   source=source, sector_information='', job_type=job_type,
                    job_location=location, job_url=company_job_link,
                    description=description, salary=salary)
         db.session.add(job)
