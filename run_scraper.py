@@ -7,7 +7,7 @@ from myapp import db, create_app
 from datetime import datetime
 
 pythonanywhere = False
-
+jobs_age = 30
 
 # functions
 def runSpider(script_path, result_path):
@@ -18,6 +18,19 @@ def runSpider(script_path, result_path):
 
 # e.g python run_scraper indeed_uk.py
 spider_name = sys.argv[1]
+
+if 'delete_old_jobs' == spider_name:
+    mapp = create_app()
+    mapp.app_context().push()
+    for job in Jobs.query.all():
+        old_date = job.date_posted
+        today = datetime.now()
+
+        time = today - old_date
+        if time.days >= jobs_age:
+            db.session.delete(job)
+
+
 
 if 'simply_uk.py' == spider_name:
     if pythonanywhere:
@@ -193,7 +206,7 @@ if 'reed.py' == spider_name:
         spider_path = 'myapp\\scraper\\scripts\\reed\\reed.py'
         results_path = 'myapp\\scraper\\results\\reed\\reed_results.csv'
 
-    # runSpider(spider_path, results_path)
+    runSpider(spider_path, results_path)
 
     # pushing app context
     mapp = create_app()
@@ -214,7 +227,48 @@ if 'reed.py' == spider_name:
         has_old = Jobs.query.filter_by(job_title=title, source=source).first()
         if has_old:
             db.session.delete(has_old)
-            
+
+        job = Jobs(job_title=title, city=city, date_posted=datetime.now(), 
+                   company_name=company_name, company_website='',
+                   source=source, sector_information='', job_type=job_type,
+                   job_location=location, job_url=company_job_link,
+                   description=description, salary=salary)
+        db.session.add(job)
+    db.session.commit()
+
+    # removing previous file
+    os.remove(results_path)
+
+if 'totaljobs.py' == spider_name:
+    if pythonanywhere:
+        spider_path = '/home/newicarus/mysite/myapp/myapp/scraper/scripts/totaljobs/totaljobs.py'
+        results_path = '/home/newicarus/mysite/myapp/myapp/scraper/results/totaljobs/totaljobs_results.csv'
+    else:
+        spider_path = 'myapp\\scraper\\scripts\\totaljobs\\totaljobs.py'
+        results_path = 'myapp\\scraper\\results\\totaljobs\\totaljobs_results.csv'
+
+    runSpider(spider_path, results_path)
+
+    # pushing app context
+    mapp = create_app()
+    mapp.app_context().push()
+    # Adding data to database
+    data = pd.read_csv(results_path)
+    for d in data.index:
+        title = data['Title'][d]
+        company_name = data['Company Name'][d]
+        city = data['City'][d]
+        location = data['Company Location'][d]
+        job_type = data['Job Type'][d]
+        company_job_link = data['Job Link'][d]
+        salary = data['Salary'][d]
+        description = ''
+        source='totaljobs.com'
+
+        has_old = Jobs.query.filter_by(job_title=title, source=source).first()
+        if has_old:
+            db.session.delete(has_old)
+
         job = Jobs(job_title=title, city=city, date_posted=datetime.now(), 
                    company_name=company_name, company_website='',
                    source=source, sector_information='', job_type=job_type,
