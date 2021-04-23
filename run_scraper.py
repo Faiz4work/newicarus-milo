@@ -241,13 +241,14 @@ if 'reed.py' == spider_name:
 
 if 'totaljobs.py' == spider_name:
     if pythonanywhere:
-        spider_path = '/home/newicarus/mysite/myapp/myapp/scraper/scripts/totaljobs/totaljobs.py'
+        spider_path = '/home/newicarus/mysite/myapp/myapp/scraper/scripts/totaljobs/totaljobs2.py'
         results_path = '/home/newicarus/mysite/myapp/myapp/scraper/results/totaljobs/totaljobs_results.csv'
     else:
-        spider_path = 'myapp\\scraper\\scripts\\totaljobs\\totaljobs.py'
+        spider_path = 'myapp\\scraper\\scripts\\totaljobs\\totaljobs2.py'
         results_path = 'myapp\\scraper\\results\\totaljobs\\totaljobs_results.csv'
 
-    runSpider(spider_path, results_path)
+    # runSpider(spider_path, results_path)
+    python spider_path
 
     # pushing app context
     mapp = create_app()
