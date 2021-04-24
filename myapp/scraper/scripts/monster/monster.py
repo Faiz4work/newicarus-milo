@@ -44,7 +44,7 @@ class MonsterSpider(Spider):
 
     def start_requests(self):
         for city, symbol in self.cities.items():
-            for i in range(1,5):
+            for i in range(1,11):
                 body = '{"jobQuery":{"locations":[{"address":"","country":"gb"}],"excludeJobs":[],"companyDisplayNames":[],"query":"' + f"{symbol}" + '"},"offset":' + f"{i}" + ',"pageSize":10,"searchId":"5ee4be24-f55e-44a3-9591-68f59a36c665","jobAdsRequest":{"position":[1,2,3,4,5,6,7,8,9,10],"placement":{"component":"JSR_SPLIT_VIEW","appName":"monster"}}}'
                 yield Request(url=self.url, method='POST', dont_filter=True,
                                 headers=myheader, body=body, 
