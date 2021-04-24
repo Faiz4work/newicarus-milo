@@ -248,7 +248,6 @@ if 'totaljobs.py' == spider_name:
         results_path = 'myapp\\scraper\\results\\totaljobs\\totaljobs_results.csv'
 
     # runSpider(spider_path, results_path)
-    python spider_path
 
     # pushing app context
     mapp = create_app()
@@ -280,3 +279,47 @@ if 'totaljobs.py' == spider_name:
 
     # removing previous file
     os.remove(results_path)
+
+
+if 'monster.py' == spider_name:
+    if pythonanywhere:
+        spider_path = '/home/newicarus/mysite/myapp/myapp/scraper/scripts/monster/monster.py'
+        results_path = '/home/newicarus/mysite/myapp/myapp/scraper/results/monster/monster_results.csv'
+    else:
+        spider_path = 'myapp\\scraper\\scripts\\monster\\monster.py'
+        results_path = 'myapp\\scraper\\results\\monster\\monster_results.csv'
+
+    runSpider(spider_path, results_path)
+
+    # pushing app context
+    mapp = create_app()
+    mapp.app_context().push()
+    # Adding data to database
+    data = pd.read_csv(results_path)
+    for d in data.index:
+        title = data['Title'][d]
+        company_name = data['Company Name'][d]
+        city = data['City'][d]
+        location = data['Company Location'][d]
+        job_type = data['Job Type'][d]
+        company_job_link = data['Job Link'][d]
+        company_website = data['Company Email']
+        salary = data['Salary'][d]
+        description = ''
+        source='monster.co.uk'
+
+        has_old = Jobs.query.filter_by(job_title=title, source=source).first()
+        if has_old:
+            db.session.delete(has_old)
+
+        job = Jobs(job_title=title, city=city, date_posted=datetime.now(), 
+                   company_name=company_name, company_website='',
+                   source=source, sector_information='', job_type=job_type,
+                   job_location=location, job_url=company_job_link,
+                   description=description, salary=salary)
+        db.session.add(job)
+    db.session.commit()
+
+    # removing previous file
+    os.remove(results_path)
+

@@ -65,11 +65,11 @@ class MonsterSpider(Spider):
 
             yield{
                 'Title': title,
-                'Company Job Url': company_job_url,
+                # 'Company Job Url': company_job_url,
                 'Company Email': company_email,
                 'Job Type': job_type,
-                'Job Url': job_url,
-                'Job Location': job_location,
+                'Job Link': job_url,
+                'Company Location': job_location,
                 'Salary': salary,
                 'Company Name': company_name,
             }
