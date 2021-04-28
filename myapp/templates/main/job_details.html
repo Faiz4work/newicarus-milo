@@ -39,8 +39,12 @@
         </div>
         
         <div class="col-md-6">
-            <h6>Email</h6>
+            <h6>Email/company website</h6>
+            {% if job.company_website  %}
+                {{ job.company_website }}
+            {% else %}
             Not Available
+            {% endif %}
             <hr>
         </div>
         <div class="col-md-6">

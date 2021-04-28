@@ -1,14 +1,25 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 <div class="container ">
     <div class="jumbotron bg-white drop-shadow">
         <div class="row">
             <div class="col-md-12">
-                <h5>Now {{length}} results available for "{{keywords}}"</h5>
-                <br>
-                <table class="table  table-hover table-sm">
-                    <thead class="thead-dark">
+                <form action="{{ url_for('main.results') }}", method="POST" id="myform">
+                    <div class="mb-4" 
+                    style="display: flex; flex-direction:row;
+                            flex-wrap:wrap; justify-content: space-between;">
+                        <h5>Now {{length}} results available for "{{keywords}}"</h5>
+                        <div>
+                        <input type="submit" value="Import Selected Data" class="mr-3 mb-2 btn btn-dark">
+                        <label for="select-all" id="label" class="btn btn-info">Check all</label>
+                        <input type="checkbox" name="" id="select-all"
+                            style="width: 30px; height:20px; display:none;">
+                        </div>
+                    </div>
+                <table class="table table-striped table-sm" style="width:100%;">
+                    <thead>
                         <tr>
                             <th>Title</th>
                             <th>Date</th>
@@ -30,76 +41,34 @@
                             <td>{{ job.job_location }}</td>
                             <td>{{ job.job_type }}</td>
                             <td>{{ job.source }}</td>
-                            <td><input type="checkbox" id="" name="" value=""></td>
+                            <td><input type="checkbox" name="csv_jobs" value="{{job.id}}"></td>
                         </tr>
                         {% endfor %}
-                        <!-- <tr>
-                            <td>Client Partner</td>
-                            <td>NIL</td>
-                            <td>00/00/2021</td>
-                            <td>Name </td>
-                            <td>Pakistan</td>
-                            <td>Pakistan</td>
-                            <td>0</td>
-                            <td>----</td>
-                            <td><input type="checkbox" id="" name="" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>Client Partner</td>
-                            <td>NIL</td>
-                            <td>00/00/2021</td>
-                            <td>Name </td>
-                            <td>Pakistan</td>
-                            <td>Pakistan</td>
-                            <td>0</td>
-                            <td>----</td>
-                            <td><input type="checkbox" id="" name="" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>Client Partner</td>
-                            <td>NIL</td>
-                            <td>00/00/2021</td>
-                            <td>Name </td>
-                            <td>Pakistan</td>
-                            <td>Pakistan</td>
-                            <td>0</td>
-                            <td>----</td>
-                            <td><input type="checkbox" id="" name="" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>Client Partner</td>
-                            <td>NIL</td>
-                            <td>00/00/2021</td>
-                            <td>Name </td>
-                            <td>Pakistan</td>
-                            <td>Pakistan</td>
-                            <td>0</td>
-                            <td>----</td>
-                            <td><input type="checkbox" id="" name="" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>Client Partner</td>
-                            <td>NIL</td>
-                            <td>00/00/2021</td>
-                            <td>Name </td>
-                            <td>Pakistan</td>
-                            <td>Pakistan</td>
-                            <td>0</td>
-                            <td>----</td>
-                            <td><input type="checkbox" id="" name="" value=""></td>
-                        </tr> -->
                     </tbody>
                 </table>
+              </form>
             </div>
-           
-            
-        
-        
         </form>
         </div>
-
     </div>
-  
 </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script>
+    $('#select-all').click(function(event) { 
+        var label = $('#label')
+        if(this.checked) {
+            // Iterate each checkbox
+            $('input[type="checkbox"]').each(function() {
+                this.checked = true;                        
+            });
+            label.text("Uncheck all")
+        } else {
+            $('input[type="checkbox"]').each(function() {
+                this.checked = false;                       
+            });
+            label.text("Check all")
+        }
+    });
+</script>
 
 {% endblock body %}
